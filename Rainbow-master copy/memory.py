@@ -185,10 +185,4 @@ class ReplayMemory():
       with open(path, 'rb') as f:
           self.__dict__.update(pickle.load(f))
           
-  # def load(self, path):
-  #   with open(path, 'rb') as f:
-  #       unpickler = pickle.Unpickler(f)
-  #       unpickler.persistent_load = lambda persid: None  # 提供一个空的 persistent_load 函数
-  #       self.__dict__.update(unpickler.load())
-          
   next = __next__  # Alias __next__ for Python 2 compatibility

@@ -46,7 +46,6 @@ parser.add_argument('--adam-eps', type=float, default=1.5e-4, metavar='ε', help
 parser.add_argument('--batch-size', type=int, default=32, metavar='SIZE', help='Batch size')
 parser.add_argument('--norm-clip', type=float, default=10, metavar='NORM', help='Max L2 norm for gradient clipping')
 parser.add_argument('--learn-start', type=int, default=int(1000), metavar='STEPS', help='Number of steps before starting training')
-# parser.add_argument('--evaluate', action='store_true', help='Evaluate only')
 parser.add_argument('--evaluate', action='store_true', help='Evaluate only')
 parser.add_argument('--evaluation-interval', type=int, default=1000, metavar='STEPS', help='Number of training steps between evaluations')
 parser.add_argument('--evaluation-episodes', type=int, default=10, metavar='N', help='Number of evaluation episodes to average over')
@@ -55,8 +54,7 @@ parser.add_argument('--evaluation-size', type=int, default=500, metavar='N', hel
 parser.add_argument('--render', action='store_true', help='Display screen (testing only)')
 parser.add_argument('--enable-cudnn', action='store_true', help='Enable cuDNN (faster but nondeterministic)')
 parser.add_argument('--checkpoint-interval', default=500, help='How often to checkpoint the model, defaults to 0 (never checkpoint)')
-# parser.add_argument('--memory', default = 'checkpoints/28_June/metrics.pth',help='Path to save/load the memory from')
-parser.add_argument('--memory',help='Path to save/load the memory from')
+parser.add_argument('--memory', help='Path to save/load the memory from')
 parser.add_argument('--disable-bzip-memory', action='store_true', help='Don\'t zip the memory file. Not recommended (zipping is a bit slower and much, much smaller)')
 parser.add_argument('--model', type=str, default='checkpoints/30_June/model.pth', help='Pretrained model path')
 
@@ -151,8 +149,8 @@ else:
       dqn.reset_noise()  # Draw a new set of noisy weights
 
     action = dqn.act(state)  # Choose an action greedily (with noisy weights)
-    # opponent_state = env._get_state()  # 假设环境提供这个方法
-    # opponent_action = dqn.act_opponent(opponent_state)
+    opponent_state = env._get_opponent_state()  # 假设环境提供这个方法
+    opponent_action = dqn.act_opponent(opponent_state)
     next_state, reward, done, _ = env.step(action)  # Step
     if args.reward_clip > 0:
       reward = max(min(reward, args.reward_clip), -args.reward_clip)  # Clip rewards

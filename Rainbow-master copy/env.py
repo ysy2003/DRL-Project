@@ -52,9 +52,6 @@ class Env():
     state = cv2.resize(cv2.cvtColor(self.screen, cv2.COLOR_BGR2GRAY), (84, 84), interpolation=cv2.INTER_LINEAR)
     return torch.tensor(state, dtype=torch.float32, device=self.device).div_(255)
   
-  # def _get_opponent_state(self):
-  #   state = cv2.resize(cv2.cvtColor(self.screen, cv2.COLOR_BGR2GRAY), (84, 84), interpolation=cv2.INTER_LINEAR)
-  #   return torch.tensor(state, dtype=torch.float32, device=self.device).div_(255)
 
   def _reset_buffer(self):
     for _ in range(self.window):

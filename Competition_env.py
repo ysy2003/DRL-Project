@@ -28,10 +28,11 @@ from G6.agent import Agent as AgentL
 # argsmodelL = r"results/default/model.pth"
 
 # argsmodelL = r"results/default/model.pth"
-argsmodelL = os.path.basename(os.path.dirname(inspect.getfile(AgentL)))+"/model_ori.pth"
 argsmodelR = os.path.basename(os.path.dirname(inspect.getfile(AgentR)))+"/model_ori.pth"
 
 # argsmodelL = os.path.basename(os.path.dirname(inspect.getfile(AgentL)))+"/model_ori.pth"
+# argsmodelR = r"results/default/model.pth"
+argsmodelL = r"results/default/model.pth"
 # argsmodelR = r"results/default/model.pth"
 
 

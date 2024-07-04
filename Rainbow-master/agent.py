@@ -11,7 +11,6 @@ from model import DQN
 
 class Agent():
   def __init__(self, args, env):
-    self.args  = args
     self.action_space = env.action_space()
     self.atoms = args.atoms
     self.Vmin = args.V_min
@@ -26,8 +25,7 @@ class Agent():
     self.online_net = DQN(args, self.action_space).to(device=args.device)
     if args.model:  # Load pretrained model if provided
       if os.path.isfile(args.model):
-
-        state_dict = torch.load("G6/model_ori.pth", map_location='cpu')  # Always load tensors onto CPU by default, will shift to GPU if necessary
+        state_dict = torch.load(args.model, map_location='cpu')  # Always load tensors onto CPU by default, will shift to GPU if necessary
         if 'conv1.weight' in state_dict.keys():
           for old_key, new_key in (('conv1.weight', 'convs.0.weight'), ('conv1.bias', 'convs.0.bias'), ('conv2.weight', 'convs.2.weight'), ('conv2.bias', 'convs.2.bias'), ('conv3.weight', 'convs.4.weight'), ('conv3.bias', 'convs.4.bias')):
             state_dict[new_key] = state_dict[old_key]  # Re-map state dict for old pretrained models
@@ -47,16 +45,6 @@ class Agent():
 
     self.optimiser = optim.Adam(self.online_net.parameters(), lr=args.learning_rate, eps=args.adam_eps)
 
-  def load_opponent_model(self, opponent_model_path):
-    self.opponent_net = DQN(self.args, self.action_space).to(device=self.args.device)
-    state_dict = torch.load(opponent_model_path, map_location='cpu')
-    self.opponent_net.load_state_dict(state_dict)
-    self.opponent_net.eval()
-    
-  def act_opponent(self, state):
-    with torch.no_grad():
-        return (self.opponent_net(state.unsqueeze(0)) * self.support).sum(2).argmax(1).item()
-    
   # Resets noisy weights in all linear layers (of online net only)
   def reset_noise(self):
     self.online_net.reset_noise()
@@ -73,10 +61,8 @@ class Agent():
   def learn(self, mem):
     # Sample transitions
     idxs, states, actions, returns, next_states, nonterminals, weights = mem.sample(self.batch_size)
-
+    states = torch.flip(states, [3])
     # Calculate current state probabilities (online network noise already sampled)
-    if torch.rand(1).item() > 0.5:
-      states = torch.flip(states, [3])
     log_ps = self.online_net(states, log=True)  # Log probabilities log p(s_t, ·; θonline)
     log_ps_a = log_ps[range(self.batch_size), actions]  # log p(s_t, a_t; θonline)
 

@@ -58,7 +58,8 @@ parser.add_argument('--checkpoint-interval', default=500, help='How often to che
 parser.add_argument('--memory',help='Path to save/load the memory from')
 # parser.add_argument('--memory',default = 'results/default/memory.pkl',help='Path to save/load the memory from')
 parser.add_argument('--disable-bzip-memory', action='store_true', help='Don\'t zip the memory file. Not recommended (zipping is a bit slower and much, much smaller)')
-parser.add_argument('--model', type=str, default='checkpoints/30_June/model.pth', help='Pretrained model path')
+# parser.add_argument('--model', type=str, default='checkpoints/30_June/model.pth', help='Pretrained model path')
+parser.add_argument('--model', type=str, default='G6/model_ori.pth', help='Pretrained model path')
 
 # Setup
 args = parser.parse_args()
@@ -110,7 +111,7 @@ action_space = env.action_space()
 
 # Agent
 dqn = Agent(args, env)
-dqn.load_opponent_model("G6/model_ori.pth")
+# dqn.load_opponent_model("G6/model_ori.pth")
 
 # If a model is provided, and evaluate is false, presumably we want to resume, so try to load memory
 if args.memory and os.path.exists(args.memory):

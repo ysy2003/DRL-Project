@@ -135,10 +135,11 @@ while T < args.evaluation_size:
   state = next_state
   T += 1
 
-if args.evaluate:
+if args.evaluate:#评估模式
   dqn.eval()  # Set DQN (online network) to evaluation mode
   avg_reward, avg_Q = test(args,env, 0, dqn, val_mem, metrics, results_dir, evaluate=True)  # Test
   print('Avg. reward: ' + str(avg_reward) + ' | Avg. Q: ' + str(avg_Q))
+#训练模式，现在强制训练，训练终止的两个条件（1）达到最大训练步数Tmax（2）达到最大奖励
 else:
   # Training loop
   dqn.train()

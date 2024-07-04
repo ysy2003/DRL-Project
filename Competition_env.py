@@ -18,14 +18,19 @@ from G6.agent import Agent as AgentL
 
 # argsmodelL = os.path.basename(os.path.dirname(inspect.getfile(AgentL)))+"/model_ori.pth"
 
-argsmodelL = r"checkpoints/29_June/model.pth"
-
-# argsmodelR = os.path.basename(os.path.dirname(inspect.getfile(AgentR)))+"/model_ori.pth"
-
-argsmodelR = r"checkpoints/30_June/model.pth"
+# argsmodelL = r"checkpoints/29_June/model.pth"
+# argsmodelR = r"G6/model_ori.pth"
+# argsmodelR = r"checkpoints/30_June/model.pth"
 
 
 # argsmodelL = os.path.basename(os.path.dirname(inspect.getfile(AgentL)))+"/model_ori.pth"
+
+# argsmodelL = r"results/default/model.pth"
+# argsmodelR = os.path.basename(os.path.dirname(inspect.getfile(AgentR)))+"/model_ori.pth"
+
+argsmodelL = os.path.basename(os.path.dirname(inspect.getfile(AgentL)))+"/model_ori.pth"
+argsmodelR = r"results/default/model.pth"
+
 
 from env2 import Env
 

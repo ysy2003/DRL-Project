@@ -55,8 +55,8 @@ parser.add_argument('--evaluation-size', type=int, default=500, metavar='N', hel
 parser.add_argument('--render', action='store_true', help='Display screen (testing only)')
 parser.add_argument('--enable-cudnn', action='store_true', help='Enable cuDNN (faster but nondeterministic)')
 parser.add_argument('--checkpoint-interval', default=500, help='How often to checkpoint the model, defaults to 0 (never checkpoint)')
-# parser.add_argument('--memory', default = 'checkpoints/28_June/metrics.pth',help='Path to save/load the memory from')
-parser.add_argument('--memory',help='Path to save/load the memory from')
+# parser.add_argument('--memory',help='Path to save/load the memory from')
+parser.add_argument('--memory',default = 'result/default/memory.pkl',help='Path to save/load the memory from')
 parser.add_argument('--disable-bzip-memory', action='store_true', help='Don\'t zip the memory file. Not recommended (zipping is a bit slower and much, much smaller)')
 parser.add_argument('--model', type=str, default='checkpoints/30_June/model.pth', help='Pretrained model path')
 
@@ -183,6 +183,10 @@ else:
       # Checkpoint the network
       if (args.checkpoint_interval != 0) and (T % args.checkpoint_interval == 0):
         dqn.save(results_dir, 'checkpoint.pth')
+
+      # save the memory
+      if T % 100 == 0:
+        save_memory(mem, args.memory, args.disable_bzip_memory)
     
     state = next_state
     

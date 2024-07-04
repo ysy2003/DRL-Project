@@ -76,7 +76,7 @@ class Agent():
 
     # Calculate current state probabilities (online network noise already sampled)
     if torch.rand(1).item() > 0.5:
-      states = torch.flip(states, [2])
+      states = torch.flip(states, [3])
     log_ps = self.online_net(states, log=True)  # Log probabilities log p(s_t, ·; θonline)
     log_ps_a = log_ps[range(self.batch_size), actions]  # log p(s_t, a_t; θonline)
 

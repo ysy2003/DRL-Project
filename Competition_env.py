@@ -17,9 +17,9 @@ from G6.agent import Agent as AgentR
 from G6.agent import Agent as AgentL
 
 # argsmodelR = r"G6/model_ori.pth"
-argsmodelL = r"checkpoints/5_July_2/model.pth"
-
-argsmodelR = os.path.basename(os.path.dirname(inspect.getfile(AgentR)))+"/model_ori.pth"
+argsmodelR = r"checkpoints/4_July/model.pth"
+argsmodelL = r"checkpoints/30_June/model.pth"
+# argsmodelR = os.path.basename(os.path.dirname(inspect.getfile(AgentR)))+"/model_ori.pth"
 # argsmodelL = os.path.basename(os.path.dirname(inspect.getfile(AgentL)))+"/model_ori.pth"
 
 

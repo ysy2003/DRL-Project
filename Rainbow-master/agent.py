@@ -72,17 +72,17 @@ class Agent():
     # Sample transitions
     idxs, states, actions, returns, next_states, nonterminals, weights = mem.sample(self.batch_size)
     # states = torch.flip(states, [2])
-    self.flip_counter += 1
-    if self.flip_counter >= self.flip_interval:
-        self.flip_counter = 0
-        self.should_flip = torch.rand(1).item() > 0.5
+    # self.flip_counter += 1
+    # if self.flip_counter >= self.flip_interval:
+    #     self.flip_counter = 0
+    #     self.should_flip = torch.rand(1).item() > 0.5
 
-    # 如果需要翻转状态和动作
-    if self.should_flip:
-      states = torch.flip(states, [2])
-
-    # if torch.rand(1).item() > 0.5:
+    # # 如果需要翻转状态和动作
+    # if self.should_flip:
     #   states = torch.flip(states, [2])
+
+    if torch.rand(1).item() > 0.5:
+      states = torch.flip(states, [2])
     # states = torch.flip(states, [3])
     # next_states = torch.flip(next_states, [3])
     # actions = torch.tensor([flip_action(a) for a in actions], device=actions.device)

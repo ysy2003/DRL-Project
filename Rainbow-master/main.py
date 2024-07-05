@@ -58,8 +58,8 @@ parser.add_argument('--checkpoint-interval', default=1000, help='How often to ch
 parser.add_argument('--memory',help='Path to save/load the memory from')
 # parser.add_argument('--memory',default = 'results/default/memory.pkl',help='Path to save/load the memory from')
 parser.add_argument('--disable-bzip-memory', action='store_true', help='Don\'t zip the memory file. Not recommended (zipping is a bit slower and much, much smaller)')
-# parser.add_argument('--model', type=str, default='checkpoints/4_July/model.pth', help='Pretrained model path')
-parser.add_argument('--model', type=str, default='G6/model_ori.pth', help='Pretrained model path')
+parser.add_argument('--model', type=str, default='checkpoints/4_July/model.pth', help='Pretrained model path')
+# parser.add_argument('--model', type=str, default='G6/model_ori.pth', help='Pretrained model path')
 # parser.add_argument('--opponent-model', type=str, default='G6/opponent_model.pth', help='Path to opponent model')
 parser.add_argument('--flip-interval', type=int, default=1000, help='Interval steps to randomly choose flipping state')
 

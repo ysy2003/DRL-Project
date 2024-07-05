@@ -11,7 +11,7 @@ class Env():
   def __init__(self, env):
     self.device = "cpu"
     #self.ale = atari_py.ALEInterface()
-    self.env = retro.make(game='Pong-Atari2600', players=1)
+    self.env = retro.make(game='Pong-Atari2600', players=2)
     #self.ale.setInt('random_seed', args.seed)
     #self.ale.setInt('max_num_frames_per_episode', args.max_episode_length)
     #self.ale.setFloat('repeat_action_probability', 0)  # Disable sticky actions
@@ -29,7 +29,7 @@ class Env():
     #self.env = env
     self.done = None
     self.info = None
-    self.players = 1
+    self.players = 2
 
   def interact(self, act0):
     

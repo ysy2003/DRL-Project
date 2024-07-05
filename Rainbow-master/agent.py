@@ -21,6 +21,9 @@ class Agent():
     self.n = args.multi_step
     self.discount = args.discount
     self.norm_clip = args.norm_clip
+    self.flip_interval = args.flip_interval
+    self.flip_counter = 0
+    self.should_flip = False  # 是否翻转状态的标志
 
     self.online_net = DQN(args, self.action_space).to(device=args.device)
     if args.model:  # Load pretrained model if provided
@@ -44,6 +47,13 @@ class Agent():
       param.requires_grad = False
 
     self.optimiser = optim.Adam(self.online_net.parameters(), lr=args.learning_rate, eps=args.adam_eps)
+  
+  # def load_opponent_model(self, opponent_model_path):
+  #   self.opponent_net = DQN(self.args, self.action_space).to(device=self.args.device)
+  #   state_dict = torch.load(opponent_model_path, map_location='cpu')
+  #   self.opponent_net.load_state_dict(state_dict)
+  #   self.opponent_net.eval()
+  #   print("Loading opponent model: " + opponent_model_path)
 
   # Resets noisy weights in all linear layers (of online net only)
   def reset_noise(self):
@@ -61,8 +71,23 @@ class Agent():
   def learn(self, mem):
     # Sample transitions
     idxs, states, actions, returns, next_states, nonterminals, weights = mem.sample(self.batch_size)
-    states = torch.flip(states, [3])
+    # states = torch.flip(states, [2])
+    self.flip_counter += 1
+    if self.flip_counter >= self.flip_interval:
+        self.flip_counter = 0
+        self.should_flip = torch.rand(1).item() > 0.5
+
+    # 如果需要翻转状态和动作
+    if self.should_flip:
+      states = torch.flip(states, [2])
+
+    # if torch.rand(1).item() > 0.5:
+    #   states = torch.flip(states, [2])
+    # states = torch.flip(states, [3])
+    # next_states = torch.flip(next_states, [3])
+    # actions = torch.tensor([flip_action(a) for a in actions], device=actions.device)
     # Calculate current state probabilities (online network noise already sampled)
+    
     log_ps = self.online_net(states, log=True)  # Log probabilities log p(s_t, ·; θonline)
     log_ps_a = log_ps[range(self.batch_size), actions]  # log p(s_t, a_t; θonline)
 

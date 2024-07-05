@@ -23,7 +23,7 @@ parser.add_argument('--id', type=str, default='default', help='Experiment ID')
 parser.add_argument('--seed', type=int, default=123, help='Random seed')
 parser.add_argument('--disable-cuda', action='store_true', help='Disable CUDA')
 parser.add_argument('--game', type=str, default='Pong-Atari2600', choices=atari_py.list_games(), help='ATARI game')
-parser.add_argument('--T-max', type=int, default=int(10000), metavar='STEPS', help='Number of training steps (4x number of frames)')
+parser.add_argument('--T-max', type=int, default=int(1000000), metavar='STEPS', help='Number of training steps (4x number of frames)')
 parser.add_argument('--max-episode-length', type=int, default=int(108e3), metavar='LENGTH', help='Max episode length in game frames (0 to disable)')
 parser.add_argument('--history-length', type=int, default=4, metavar='T', help='Number of consecutive states processed')
 parser.add_argument('--architecture', type=str, default='canonical', choices=['canonical', 'data-efficient'], metavar='ARCH', help='Network architecture')
@@ -54,12 +54,16 @@ parser.add_argument('--evaluation-episodes', type=int, default=10, metavar='N', 
 parser.add_argument('--evaluation-size', type=int, default=500, metavar='N', help='Number of transitions to use for validating Q')
 parser.add_argument('--render', action='store_true', help='Display screen (testing only)')
 parser.add_argument('--enable-cudnn', action='store_true', help='Enable cuDNN (faster but nondeterministic)')
-parser.add_argument('--checkpoint-interval', default=500, help='How often to checkpoint the model, defaults to 0 (never checkpoint)')
+parser.add_argument('--checkpoint-interval', default=1000, help='How often to checkpoint the model, defaults to 0 (never checkpoint)')
 parser.add_argument('--memory',help='Path to save/load the memory from')
 # parser.add_argument('--memory',default = 'results/default/memory.pkl',help='Path to save/load the memory from')
 parser.add_argument('--disable-bzip-memory', action='store_true', help='Don\'t zip the memory file. Not recommended (zipping is a bit slower and much, much smaller)')
-# parser.add_argument('--model', type=str, default='checkpoints/30_June/model.pth', help='Pretrained model path')
+# parser.add_argument('--model', type=str, default='checkpoints/4_July/model.pth', help='Pretrained model path')
 parser.add_argument('--model', type=str, default='G6/model_ori.pth', help='Pretrained model path')
+# parser.add_argument('--opponent-model', type=str, default='G6/opponent_model.pth', help='Path to opponent model')
+parser.add_argument('--flip-interval', type=int, default=1000, help='Interval steps to randomly choose flipping state')
+
+
 
 # Setup
 args = parser.parse_args()

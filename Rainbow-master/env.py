@@ -100,6 +100,7 @@ class Env():
       if done:
         break
     observation = frame_buffer.max(0)[0]
+    # observation = torch.flip(frame_buffer.max(0)[0], [-1]) 
     self.state_buffer.append(observation)
     # Detect loss of life as terminal in training mode
     # if self.training:
